@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mango Hub — Fresh Mangoes & More</title>
+  <meta name="description" content="Mango Hub — Fresh mangoes, juices, desserts. Order via WhatsApp."/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#fff7e1;
+      --accent:#ffb703;
+      --accent-2:#f77f00;
+      --green:#2a9d8f;
+      --muted:#6b6b6b;
+      --card:#fff;
+      --glass: rgba(255,255,255,0.6);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background: linear-gradient(180deg, #fff9ee 0%, #fff7e1 60%);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+    }
+    header{
+      position:sticky; top:0; z-index:40;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.3));
+      border-bottom:1px solid rgba(0,0,0,0.04);
+    }
+    .nav{
+      max-width:1100px; margin:0 auto; padding:14px 20px;
+      display:flex; align-items:center; gap:18px;
+    }
+    .logo{
+      display:flex; align-items:center; gap:12px;
+      font-weight:700; font-size:20px; color:#1f3b1f;
+    }
+    .logo .badge{
+      width:44px; height:44px; border-radius:10px;
+      display:grid; place-items:center; background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      box-shadow:0 6px 18px rgba(247,127,0,0.15); color:white; font-weight:800;
+    }
+    nav{margin-left:auto; display:flex; gap:12px; align-items:center}
+    nav a{ text-decoration:none; color:#1f3b1f; padding:8px 12px; border-radius:10px; font-weight:600; }
+    nav a.cta{ background:var(--accent); color:#fff; box-shadow:0 8px 20px rgba(247,127,0,0.18)}
+    .container{max-width:1100px; margin:0 auto; padding:40px 20px;}
+    /* Hero */
+    .hero{
+      display:grid; grid-template-columns: 1fr 420px; gap:28px; align-items:center;
+    }
+    .hero-card{
+      background: var(--card);
+      padding:28px; border-radius:20px;
+      box-shadow: 0 10px 30px rgba(13,13,13,0.06);
+    }
+    .eyebrow{display:inline-block; padding:6px 10px; border-radius:999px; background:linear-gradient(90deg,var(--accent-2),var(--accent)); color:#fff; font-weight:700; font-size:13px}
+    h1{margin:12px 0 8px; font-size:34px; line-height:1.05; color:#163a14}
+    p.lead{color:var(--muted); margin:0 0 18px}
+    .hero-grid{display:flex; gap:10px; margin-top:14px;}
+    .feature{display:flex; gap:10px; align-items:center; background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.75)); padding:10px 12px; border-radius:12px}
+    .feature .dot{width:10px;height:10px;border-radius:50%; background:var(--green)}
+    .hero-img{border-radius:18px; overflow:hidden; box-shadow: 0 18px 50px rgba(18,18,18,0.08); transform-origin:center; transition:transform .6s cubic-bezier(.2,.9,.25,1)}
+    .hero-img img{display:block; width:100%; height:100%; object-fit:cover}
+    .hero-img:hover{transform:scale(1.03) rotate(-1deg)}
+    /* Products */
+    .section{margin-top:42px}
+    .grid{display:grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap:18px;}
+    .card{
+      background:var(--card); border-radius:16px; padding:12px; overflow:hidden;
+      box-shadow: 0 8px 28px rgba(12,12,12,0.06); transition:transform .25s, box-shadow .25s;
+    }
+    .card:hover{transform:translateY(-6px); box-shadow: 0 18px 40px rgba(10,10,10,0.08)}
+    .card img{width:100%; height:160px; object-fit:cover; border-radius:12px}
+    .card h3{margin:10px 0 6px; font-size:18px}
+    .card p{margin:0 0 10px; color:var(--muted); font-size:14px}
+    .price{font-weight:800; color:var(--accent-2); font-size:16px}
+    .btn{display:inline-block; padding:8px 12px; border-radius:12px; cursor:pointer; text-decoration:none; font-weight:700}
+    .btn-outline{border:2px solid rgba(20,20,20,0.06); background:transparent}
+    .btn-whatsapp{background:linear-gradient(90deg,#25D366,#1DA851); color:white}
+    /* Price list & order form layout */
+    .two-col{display:grid; grid-template-columns: 1fr 420px; gap:22px; align-items:start}
+    table.price-table{width:100%; border-collapse:collapse; background:var(--card); border-radius:12px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.05)}
+    table.price-table th, table.price-table td{padding:12px 14px; text-align:left; border-bottom:1px dashed rgba(0,0,0,0.05)}
+    table.price-table th{background:linear-gradient(180deg,#fff,#fff7); font-weight:700}
+    form.order-form{background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9)); padding:16px; border-radius:12px; box-shadow:0 10px 28px rgba(0,0,0,0.05)}
+    form .field{margin-bottom:10px}
+    input[type="text"], input[type="email"], input[type="number"], textarea, select{
+      width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(0,0,0,0.06);
+      font-size:14px; outline:none;
+    }
+    textarea{min-height:100px; resize:vertical}
+    .small{font-size:13px; color:var(--muted)}
+    footer{margin-top:48px; padding:28px 20px; background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.01))}
+    .footer-inner{max-width:1100px; margin:0 auto; display:flex; gap:20px; align-items:center; justify-content:space-between}
+    .socials a{margin-right:8px; text-decoration:none; color:#1f3b1f; font-weight:700}
+    /* Floating WhatsApp and settings */
+    .floating{
+      position:fixed; right:20px; bottom:20px; z-index:60; display:flex; flex-direction:column; gap:12px;
+    }
+    .fab{width:56px; height:56px; border-radius:999px; display:grid; place-items:center; box-shadow:0 12px 30px rgba(2,2,2,0.15); cursor:pointer}
+    .fab.settings{background:linear-gradient(180deg,#fff,#fff); border:1px solid rgba(0,0,0,0.06)}
+    .fab.whatsapp{background:linear-gradient(45deg,#25D366,#1DA851); color:white}
+    /* Gallery modal */
+    .lightbox{position:fixed; inset:0; display:none; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index:70}
+    .lightbox .box{max-width:900px; width:96%; background:transparent}
+    .lightbox img{width:100%; border-radius:12px}
+    .show{display:flex}
+    /* Responsive */
+    @media (max-width:920px){
+      .hero{grid-template-columns:1fr; }
+      .two-col{grid-template-columns:1fr}
+      header .nav{padding:10px 14px}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav">
+      <div class="logo">
+        <div class="badge">M</div>
+        <div>
+          Mango Hub<br><span style="font-weight:500; font-size:12px; color:var(--muted)">Fresh • Juicy • Local</span>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#prices">Price List</a>
+        <a href="#gallery">Gallery</a>
+        <a class="cta" href="#order">Order Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="home">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-card">
+        <span class="eyebrow">Open • Delivery Available</span>
+        <h1>Welcome to <span style="color:var(--accent-2)">Mango Hub</span></h1>
+        <p class="lead">Handpicked fresh mangoes, cold-pressed juices, jams & desserts. Enjoy the tropical sweetness delivered to your door.</p>
+
+        <div class="hero-grid">
+          <div class="feature"><div class="dot"></div><div><strong>Farm fresh</strong><div class="small">Direct from growers</div></div></div>
+          <div class="feature"><div class="dot"></div><div><strong>Quick delivery</strong><div class="small">Same-day in selected areas</div></div></div>
+          <div class="feature"><div class="dot"></div><div><strong>Safe packing</strong><div class="small">Eco-friendly boxes</div></div></div>
+        </div>
+
+        <div style="margin-top:18px;">
+          <a class="btn btn-whatsapp" id="heroWhatsAppBtn" href="#" onclick="return false;">
+            📲 Order via WhatsApp
+          </a>
+          <a class="btn btn-outline" href="#products" style="margin-left:12px">Explore Products</a>
+        </div>
+
+        <div style="margin-top:18px; color:var(--muted); font-size:13px">
+          Tip: Click the ⚙️ settings button (bottom-right) to set your WhatsApp number.
+        </div>
+      </div>
+
+      <div class="hero-img" style="height:320px;">
+        <img src="https://images.unsplash.com/photo-1625673610310-8ac1d8a2a9b2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=9b5fd1b85a6d60f5a5b4a0f6a1a3c7b6" alt="Fresh mangoes">
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="section" id="products">
+      <h2 style="margin:0 0 12px">Products</h2>
+      <p class="small" style="margin-top:0">Click any product to add to order or quickly message us.</p>
+
+      <div class="grid" id="productGrid">
+        <!-- Product cards are auto-rendered by JS for convenience -->
+      </div>
+    </section>
+
+    <!-- PRICE LIST & ORDER -->
+    <section class="section" id="prices">
+      <h2>Price List & Order</h2>
+      <div class="two-col" style="margin-top:12px">
+        <div>
+          <table class="price-table" aria-label="Price list">
+            <thead>
+              <tr><th>Product</th><th>Size</th><th>Price (INR)</th></tr>
+            </thead>
+            <tbody id="priceBody">
+              <!-- filled by JS -->
+            </tbody>
+          </table>
+
+          <div style="margin-top:16px">
+            <h3 style="margin-bottom:8px">Gallery</h3>
+            <div style="display:flex; gap:8px; flex-wrap:wrap" id="gallery">
+              <!-- thumbnails from JS -->
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <h3 id="order">Order Form</h3>
+          <form class="order-form" id="orderForm">
+            <div class="field">
+              <label class="small">Name</label>
+              <input type="text" id="name" required placeholder="Your name">
+            </div>
+            <div class="field">
+              <label class="small">Phone (optional)</label>
+              <input type="text" id="phone" placeholder="e.g. 98xxxxxxxx">
+            </div>
+            <div class="field">
+              <label class="small">Choose product</label>
+              <select id="productSelect"></select>
+            </div>
+            <div class="field">
+              <label class="small">Quantity</label>
+              <input type="number" id="qty" min="1" value="1">
+            </div>
+            <div class="field">
+              <label class="small">Delivery Address</label>
+              <textarea id="address" placeholder="Street, area, city, pin code"></textarea>
+            </div>
+
+            <div style="display:flex; gap:8px; margin-top:8px;">
+              <button type="button" class="btn btn-whatsapp" id="formWhatsApp">Send via WhatsApp</button>
+              <button type="submit" class="btn btn-outline">Send Email (mailto)</button>
+            </div>
+            <div style="margin-top:8px" class="small">If WhatsApp number not set, clicking WhatsApp will prompt to add it.</div>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <div style="font-weight:800; font-size:18px">Mango Hub</div>
+          <div class="small" style="margin-top:6px">Fresh mangoes delivered. Open Mon–Sat 9am–6pm</div>
+        </div>
+        <div style="text-align:right">
+          <div class="socials">
+            <a href="#" aria-label="instagram">Instagram</a>
+            <a href="#" aria-label="facebook">Facebook</a>
+          </div>
+          <div class="small" style="margin-top:8px">Email: hello@mangohub.example<br>City: Your City</div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Floating Buttons -->
+  <div class="floating">
+    <div class="fab settings" title="Settings (WhatsApp number)" id="openSettings" aria-label="Settings">⚙️</div>
+    <div class="fab whatsapp" id="floatingWhatsApp" title="Order on WhatsApp">💬</div>
+  </div>
+
+  <!-- Settings Modal (simple) -->
+  <div id="settingsModal" style="position:fixed; inset:0; display:none; z-index:80; align-items:center; justify-content:center; background:rgba(0,0,0,0.45)">
+    <div style="width:94%; max-width:540px; background:var(--card); padding:18px; border-radius:12px; box-shadow:0 18px 40px rgba(0,0,0,0.12)">
+      <h3 style="margin:0 0 6px">Settings</h3>
+      <p class="small" style="margin-top:0">Paste your WhatsApp number (country code + number, no +). Example: <code>919876543210</code></p>
+      <div style="display:flex; gap:8px; margin-top:10px;">
+        <input id="waNumberInput" type="text" placeholder="e.g. 919876543210" style="flex:1; padding:10px; border-radius:10px; border:1px solid rgba(0,0,0,0.06)">
+        <button class="btn btn-whatsapp" id="saveNumberBtn">Save</button>
+      </div>
+      <div style="margin-top:8px; display:flex; gap:8px; justify-content:flex-end;">
+        <button class="btn btn-outline" id="closeSettings">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox for gallery -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-hidden="true">
+    <div class="box">
+      <img src="" alt="Gallery full" id="lightboxImg">
+    </div>
+  </div>
+
+  <script>
+    /***********************
+     * Data (sample items)
+     ***********************/
+    const products = [
+      { id: 'alphonso', name: 'Alphonso Mango', img: 'https://images.unsplash.com/photo-1592928306892-9f7d6e1f1f24?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&s=5b1c6c05b1d3c3f8b28a9dfdf7dd1d43', sizes: [{size:'1 kg', price:240},{size:'2 kg', price:460}] , desc:'Sweet, aromatic Alphonso from Ratnagiri.'},
+      { id: 'kachri', name: 'Kesar Mango', img: 'https://images.unsplash.com/photo-1568051243856-563a7f3e8d21?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&s=bf89c1a1b1b9f8b36e3c6d3f5b9a2b4d', sizes: [{size:'1 kg', price:200},{size:'3 kg', price:580}] , desc:'Juicy Kesar, perfect for desserts.'},
+      { id: 'langra', name: 'Langra Mango', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&s=1f4c9d3d8e4f6d3b6e9b7d3b4e5a8b1c', sizes: [{size:'1 kg', price:160},{size:'5 kg', price:750}] , desc:'Tangy-sweet Langra, popular choice.'},
+      { id: 'mangojuice', name: 'Cold-pressed Mango Juice', img: 'https://images.unsplash.com/photo-1584270354949-8e7f84b1a7f6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&s=3b7d7bd9f8a9c6b2c5e3d1a6b9f0a1c2', sizes: [{size:'250 ml', price:60},{size:'1 L', price:200}] , desc:'Freshly pressed with no sugar added.'}
+    ];
+
+    const galleryImages = [
+      'https://images.unsplash.com/photo-1498661362967-923f1c8f1b6b?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=cc6e2be1e7d6a57c1ea4a5e9a3a7b0c4',
+      'https://images.unsplash.com/photo-1574226516831-e1dff420e7f2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=5b3f6d1c3e1f0d5a6b7c8d9e1f2a3b4c',
+      'https://images.unsplash.com/photo-1592928306892-9f7d6e1f1f24?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=5b1c6c05b1d3c3f8b28a9dfdf7dd1d43'
+    ];
+
+    /***********************
+     * Render UI (products & prices)
+     ***********************/
+    const productGrid = document.getElementById('productGrid');
+    const priceBody = document.getElementById('priceBody');
+    const productSelect = document.getElementById('productSelect');
+
+    function renderProducts(){
+      products.forEach(p=>{
+        // card
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p class="small">${p.desc}</p>
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <div class="price">From ₹${p.sizes[0].price}</div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-outline" onclick="addToForm('${p.id}')">Add</button>
+              <button class="btn btn-whatsapp" onclick="quickWhats('${p.id}')">Message</button>
+            </div>
+          </div>
+        `;
+        productGrid.appendChild(card);
+
+        // price list
+        p.sizes.forEach(s=>{
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${p.name}</td><td>${s.size}</td><td>₹${s.price}</td>`;
+          priceBody.appendChild(tr);
+        });
+
+        // form select
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = p.name;
+        productSelect.appendChild(opt);
+      });
+    }
+
+    renderProducts();
+
+    /***********************
+     * Order form helpers
+     ***********************/
+    function addToForm(productId){
+      productSelect.value = productId;
+      document.getElementById('qty').value = 1;
+      window.location.hash = '#order';
+    }
+
+    function quickWhats(productId){
+      productSelect.value = productId;
+      document.getElementById('qty').value = 1;
+      sendWhatsOrder(); // attempt send (will prompt settings if phone not set)
+    }
+
+    // Lightbox gallery render
+    const galleryDiv = document.getElementById('gallery');
+    galleryImages.forEach(src=>{
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'Mango photo';
+      img.style.width = '120px';
+      img.style.height = '80px';
+      img.style.objectFit = 'cover';
+      img.style.borderRadius = '8px';
+      img.style.cursor = 'pointer';
+      img.addEventListener('click', ()=> openLightbox(src));
+      galleryDiv.appendChild(img);
+    });
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    function openLightbox(src){
+      lightboxImg.src = src;
+      lightbox.classList.add('show');
+      lightbox.setAttribute('aria-hidden','false');
+    }
+    lightbox.addEventListener('click', ()=> {
+      lightbox.classList.remove('show');
+      lightbox.setAttribute('aria-hidden','true');
+    });
+
+    /***********************
+     * WhatsApp number storage & UI
+     ***********************/
+
+    // defaultNumber = '' means not set. You can prefill with your number (e.g. '919876543210') if you edit the code.
+    const defaultNumber = ''; // <-- leave empty; user will fill via settings modal
+
+    const WA_KEY = 'mangohub_whatsapp_number';
+    if(defaultNumber) localStorage.setItem(WA_KEY, defaultNumber);
+
+    const openSettingsBtn = document.getElementById('openSettings');
+    const settingsModal = document.getElementById('settingsModal');
+    const waNumberInput = document.getElementById('waNumberInput');
+    const saveNumberBtn = document.getElementById('saveNumberBtn');
+    const closeSettingsBtn = document.getElementById('closeSettings');
+    const floatingWhats = document.getElementById('floatingWhatsApp');
+    const heroWhats = document.getElementById('heroWhatsAppBtn');
+    const formWhats = document.getElementById('formWhatsApp');
+
+    function getWhatsNumber(){
+      return localStorage.getItem(WA_KEY) || '';
+    }
+    function setWhatsNumber(val){
+      localStorage.setItem(WA_KEY, val);
+      updateWhatsUI();
+    }
+
+    function updateWhatsUI(){
+      const num = getWhatsNumber();
+      if(num){
+        // enable direct chat
+        floatingWhats.title = 'Order on WhatsApp';
+        heroWhats.onclick = (e)=>{ e.preventDefault(); sendWhatsOrder(); };
+        floatingWhats.onclick = sendWhatsOrder;
+        formWhats.onclick = sendWhatsOrder;
+      } else {
+        // if not set, open settings prompt
+        floatingWhats.onclick = ()=> { openSettings(); };
+        heroWhats.onclick = (e)=> { e.preventDefault(); openSettings(); };
+        formWhats.onclick = ()=> { openSettings(); };
+      }
+    }
+    updateWhatsUI();
+
+    openSettingsBtn.addEventListener('click', openSettings);
+    closeSettingsBtn.addEventListener('click', closeSettings);
+    saveNumberBtn.addEventListener('click', ()=>{
+      const v = waNumberInput.value.trim();
+      if(!/^\d{8,15}$/.test(v)){
+        alert('Please enter a valid number with country code, numbers only. Example: 919876543210');
+        return;
+      }
+      setWhatsNumber(v);
+      closeSettings();
+      alert('WhatsApp number saved!');
+    });
+
+    function openSettings(){
+      waNumberInput.value = getWhatsNumber();
+      settingsModal.style.display = 'flex';
+    }
+    function closeSettings(){
+      settingsModal.style.display = 'none';
+    }
+
+    // On load populate UI
+    updateWhatsUI();
+
+    /***********************
+     * Compose WhatsApp message and open
+     ***********************/
+    function sendWhatsOrder(){
+      const number = getWhatsNumber();
+      if(!number){
+        // Shouldn't happen due to button wiring, but safe fallback
+        openSettings();
+        return;
+      }
+      const name = document.getElementById('name').value.trim() || 'Customer';
+      const phone = document.getElementById('phone').value.trim();
+      const pid = document.getElementById('productSelect').value;
+      const product = products.find(p=>p.id===pid)?.name || pid;
+      const qty = document.getElementById('qty').value || 1;
+      const address = document.getElementById('address').value.trim() || 'Not provided';
+
+      // Build a friendly message
+      let msg = `Hi Mango Hub 👋%0A`;
+      msg += `I would like to place an order.%0A%0A`;
+      msg += `*Name:* ${encodeURIComponent(name)}%0A`;
+      if(phone) msg += `*Phone:* ${encodeURIComponent(phone)}%0A`;
+      msg += `*Product:* ${encodeURIComponent(product)}%0A`;
+      msg += `*Quantity:* ${encodeURIComponent(qty)}%0A`;
+      msg += `*Address:* ${encodeURIComponent(address)}%0A%0A`;
+      msg += `Please confirm availability & delivery. Thanks!`;
+
+      const waUrl = `https://wa.me/${number}?text=${msg}`;
+      window.open(waUrl, '_blank');
+    }
+
+    /***********************
+     * Simple email (mailto) fallback from order form
+     ***********************/
+    const orderForm = document.getElementById('orderForm');
+    orderForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim() || 'Customer';
+      const phone = document.getElementById('phone').value.trim();
+      const pid = document.getElementById('productSelect').value;
+      const product = products.find(p=>p.id===pid)?.name || pid;
+      const qty = document.getElementById('qty').value || 1;
+      const address = document.getElementById('address').value.trim() || 'Not provided';
+
+      const subject = encodeURIComponent(`New Order from ${name} - Mango Hub`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nPhone: ${phone}\nProduct: ${product}\nQuantity: ${qty}\nAddress: ${address}\n\n(Generated from Mango Hub website)`
+      );
+
+      window.location.href = `mailto:hello@mangohub.example?subject=${subject}&body=${body}`;
+    });
+
+    /***********************
+     * Helpful tips (first-time)
+     ***********************/
+    // show a tiny welcome tooltip in console (not intrusive)
+    console.log('Mango Hub website ready — open settings (⚙️) to add WhatsApp number or edit defaultNumber variable in code.');
+
+    // Ensure buttons reflect state on load
+    updateWhatsUI();
+  </script>
+</body>
+  </html>
